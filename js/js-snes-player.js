@@ -12,7 +12,7 @@ var jsSNESPlayer = function() {
 		init: function() {
 			
 
-			run();
+			//run();
 			
 
 			console.log(window);
@@ -34,11 +34,11 @@ var jsSNESPlayer = function() {
 				var load = _spc_load_spc(snes_spc, spc, spc_size);
 				error(Pointer_stringify(load));
 
-
+				//_spc_set_tempo(snes_spc, 180);
+				_spc_set_output();
 				_spc_clear_echo(snes_spc);
-				//_spc_filter_clear(filter);
+				_spc_filter_clear(filter);
 
-				var k, v, n = 0;
 
 				var bufferSize = 240000, sink = Sink();
 				var proxy = sink.createProxy(bufferSize);
@@ -46,16 +46,21 @@ var jsSNESPlayer = function() {
 
 					var buf = allocate('', 'i8', ALLOC_STACK);
 					var retval = _spc_play(snes_spc, bufferSize, buf);
-					//error(Pointer_stringify(retval));
-					//_spc_filter_run(filter, buf, bufferSize);
+					_spc_filter_run(filter, buf, bufferSize);
 
 					for (i = 0; i < bufferSize; i ++) {
-						buffer[i] = HEAP8[i  + buf];
-					}
 
-				    //console.log(buffer);
-				}, 1);
-				console.log(HEAP);
+						// Take a mono stream
+						if ((i - 1) % 2 == 0) {
+							buffer[i] = HEAP8[i  + buf] / 120;
+
+						} else {
+							buffer[i] = HEAP8[i + buf - 1] / 120;
+
+						}
+					}
+					console.log('Buffer');
+				}, 2, null, 24000);
 
 			}
 			
@@ -65,4 +70,6 @@ var jsSNESPlayer = function() {
 	
 }();
 
-jsSNESPlayer.init();
+//setTimeout(function() {
+	jsSNESPlayer.init();
+//}, 2000);
