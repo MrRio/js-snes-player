@@ -1,7 +1,7 @@
 js-snes-player
 ==============
 
-A prototype for an audio player that can emulate the Nintendo SNES. 
+A prototype for a HTML5 audio player that can emulate the Nintendo SNES. 
 
 How it was done:
 
