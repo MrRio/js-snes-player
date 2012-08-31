@@ -39,7 +39,7 @@ var jsSNESPlayer = function() {
 				error(Pointer_stringify(load));
 				console.log('SPC file loaded');
 
-				_spc_set_tempo(snes_spc, 260);
+				_spc_set_tempo(snes_spc, 320);
 				_spc_set_output();
 				_spc_clear_echo(snes_spc);
 				_spc_filter_clear(filter);
