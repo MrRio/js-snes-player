@@ -3,7 +3,7 @@
 */
 
 
-	bufferSize = 16384;
+	bufferSize = 16384*2;
 
 var jsSNESPlayer = function() {
 	
@@ -56,17 +56,17 @@ var jsSNESPlayer = function() {
 			console.log('Creating audio sink...');
 			 buf = allocate('', 'i8', ALLOC_STACK);
 			myaudioprocess= function(buffer, channelCount){
-				var retval = _spc_play(snes_spc, bufferSize / 2, buf);
+				var retval = _spc_play(snes_spc, bufferSize/2 , buf);
 				_spc_filter_run(filter, buf, bufferSize);
 
-				for (i = 0; i < bufferSize; i ++) {
+				for (i = 0; i < bufferSize; i =i+2) {
 
 					// Take a mono stream
 					if ((i - 1) % 2 == 0) {
-						buffer[i] = HEAP8[i  + buf] / 120;
+						buffer[i/2] = HEAP8[i  + buf] / 120;
 
 					} else {
-						buffer[i] = HEAP8[i + buf - 1] / 120;
+						buffer[i/2] = HEAP8[i + buf - 1] / 120;
 
 					}
 				}
@@ -77,7 +77,7 @@ var jsSNESPlayer = function() {
 context = new AudioContext();
 
 
-audioNode = context.createScriptProcessor(bufferSize, 0, 1);
+audioNode = context.createScriptProcessor(bufferSize/2, 0, 1);
 
 audioNode.onaudioprocess = function(audioProcessingEvent) {
 
