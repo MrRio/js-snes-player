@@ -23,13 +23,37 @@ Web Audio was also a mess in 2012 (and still is in 2014 really). This probably e
 
 Looks like last commit to sink.js was https://github.com/jussi-kalliokoski/sink.js/commits/master in October 2012. Maybe abandoned.
 
-Anyway, back to the audio bug
-
-
+Anyway, back to the audio bug...
 
 Next it loads js/js-snes-player.js
 
 Module pattern. jsSNESPlayer created then init function called. init sets up a bunch of stuff (I assume it's twitter bootstrap bumpf). In the end, when you click the play button play gets called on line 111.
 
-From debugger, play defined on js-snes-player.js:22 . I'll continue the notes in that function
+From debugger, play defined on js-snes-player.js:22 . 
+
+Had a look through play function. It fails when it tries to initialize the Sink. sink.js is totally broken. 2 years old, overly complicated  and unmaintained. I'll need a new way to play back the audio. 
+
+The business end of the play function is on line 67:
+
+proxy.on('audioprocess', function(buffer, channelCount){
+
+				var retval = _spc_play(snes_spc, bufferSize / 2, buf);
+				_spc_filter_run(filter, buf, bufferSize);
+
+				for (i = 0; i < bufferSize; i ++) {
+
+					// Take a mono stream
+					if ((i - 1) % 2 == 0) {
+						buffer[i] = HEAP8[i  + buf] / 120;
+
+					} else {
+						buffer[i] = HEAP8[i + buf - 1] / 120;
+
+					}
+				}
+				console.log('Send audio to buffer... Memory points from HEAP ' + i + ' to ' + (i + buf));
+			}, 2, null, 12000);
+
+
+This is the audio callback. The buffer "buffer" is the output buffer for the Web Audio API. bufferSize is the number of samples to generate
 
