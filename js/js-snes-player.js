@@ -15,7 +15,7 @@ var jsSNESPlayer = function() {
 	}
 
 	var proxy;
-	var bufferSize = 12000;
+	bufferSize = 12000;
 	var proxy;
 	var first
 
@@ -54,17 +54,8 @@ var jsSNESPlayer = function() {
 			_spc_filter_clear(filter);
 
 			console.log('Creating audio sink...');
-			var buf = allocate('', 'i8', ALLOC_STACK);
-			var sink = Sink();
-			console.log(typeof proxy);
-			if (typeof proxy != 'undefined') {
-				proxy.parentSink.kill();
-
-			}
-
-			proxy = sink.createProxy(bufferSize);
-
-			proxy.on('audioprocess', function(buffer, channelCount){
+			 buf = allocate('', 'i8', ALLOC_STACK);
+			myaudioprocess= function(buffer, channelCount){
 
 				var retval = _spc_play(snes_spc, bufferSize / 2, buf);
 				_spc_filter_run(filter, buf, bufferSize);
@@ -81,7 +72,7 @@ var jsSNESPlayer = function() {
 					}
 				}
 				console.log('Send audio to buffer... Memory points from HEAP ' + i + ' to ' + (i + buf));
-			}, 2, null, 12000);
+			};
 
 		}
 			
