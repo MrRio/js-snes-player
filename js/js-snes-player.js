@@ -56,7 +56,6 @@ var jsSNESPlayer = function() {
 			console.log('Creating audio sink...');
 			 buf = allocate('', 'i8', ALLOC_STACK);
 			myaudioprocess= function(buffer, channelCount){
-console.log("called");
 				var retval = _spc_play(snes_spc, bufferSize / 2, buf);
 				_spc_filter_run(filter, buf, bufferSize);
 
@@ -71,7 +70,6 @@ console.log("called");
 
 					}
 				}
-				console.log('Send audio to buffer... Memory points from HEAP ' + i + ' to ' + (i + buf));
 			};
 
 		}
