@@ -55,5 +55,8 @@ proxy.on('audioprocess', function(buffer, channelCount){
 			}, 2, null, 12000);
 
 
-This is the audio callback. The buffer "buffer" is the output buffer for the Web Audio API. bufferSize is the number of samples to generate
+This is the audio callback. The buffer "buffer" is the output buffer for the Web Audio API. bufferSize is the number of samples to generate. buf is an offset in to the Emscripten heap. It is where the audio data is calculated and stored by the Emscripten code.
+
+Plan of attack: disable sink.js and turn the audio generation in to a normal function
+
 
