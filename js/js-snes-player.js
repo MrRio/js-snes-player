@@ -3,6 +3,7 @@
 */
 
 
+	bufferSize = 16384;
 
 var jsSNESPlayer = function() {
 	
@@ -15,7 +16,6 @@ var jsSNESPlayer = function() {
 	}
 
 	var proxy;
-	bufferSize = 12000;
 	var proxy;
 	var first
 
@@ -56,7 +56,7 @@ var jsSNESPlayer = function() {
 			console.log('Creating audio sink...');
 			 buf = allocate('', 'i8', ALLOC_STACK);
 			myaudioprocess= function(buffer, channelCount){
-
+console.log("called");
 				var retval = _spc_play(snes_spc, bufferSize / 2, buf);
 				_spc_filter_run(filter, buf, bufferSize);
 
@@ -76,7 +76,23 @@ var jsSNESPlayer = function() {
 
 		}
 			
+context = new AudioContext();
 
+
+audioNode = context.createScriptProcessor(bufferSize, 0, 1);
+
+audioNode.onaudioprocess = function(audioProcessingEvent) {
+
+  // The output buffer contains the samples that will be modified and played
+   outputBuffer = audioProcessingEvent.outputBuffer;
+ for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+ outData = outputBuffer.getChannelData(channel);
+
+
+myaudioprocess(outData,1);
+}}
+
+audioNode.connect(context.destination);
 	}
 
 
@@ -120,3 +136,9 @@ var jsSNESPlayer = function() {
 //setTimeout(function() {
 	jsSNESPlayer.init();
 //}, 2000);
+
+
+
+
+
+
