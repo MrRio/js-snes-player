@@ -7,4 +7,24 @@ Chrome: Uncaught [object Object]  sink.js:35
 
 Seems to be using a project called sink.js to play back audio. sink.js seems to be broken in both FF and Chrome.
 
-I'll concentrate on Firefox for now. Strangely it fails in different places in FF and Chrome
+I'll concentrate on Firefox for now. Strangely it fails in different places in FF and Chrome.
+
+Looking at the code:
+
+Emscripten generated code in snes_spc-0.9.0/snes_spc.js . This looks like old Emscripten code (pre-asm.js ). From the comments at the top:
+
+// Note: Some Emscripten settings will significantly limit the speed of the generated code.
+// Note: Some Emscripten settings may limit the speed of the generated code.
+// TODO: " u s e   s t r i c t ";
+
+Last commit by MrRio is Aug 2012. This explains it (that's about 6 months before asm.js was available). Will need to regenerate the code at some point. Shouldn't affect fixing the audio bug.
+
+Web Audio was also a mess in 2012 (and still is in 2014 really). This probably explains why sink.js just fails.
+
+Looks like last commit to sink.js was https://github.com/jussi-kalliokoski/sink.js/commits/master in October 2012. Maybe abandoned.
+
+Anyway, back to the audio bug
+
+
+
+
