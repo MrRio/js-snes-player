@@ -1,0 +1,10 @@
+These are my notes (Liam Wilson). I gave MrRio's js-snes-player a go, but it failed to work in both Firefox 31 and Chrome 36.0.1985.143.[3~
+
+Error messages:
+
+Firefox:  Error: No audio sink available.  sink.js:412
+Chrome: Uncaught [object Object]  sink.js:35
+
+Seems to be using a project called sink.js to play back audio. sink.js seems to be broken in both FF and Chrome.
+
+I'll concentrate on Firefox for now.
