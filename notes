@@ -27,4 +27,9 @@ Anyway, back to the audio bug
 
 
 
+Next it loads js/js-snes-player.js
+
+Module pattern. jsSNESPlayer created then init function called. init sets up a bunch of stuff (I assume it's twitter bootstrap bumpf). In the end, when you click the play button play gets called on line 111.
+
+From debugger, play defined on js-snes-player.js:22 . I'll continue the notes in that function
 
