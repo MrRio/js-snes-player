@@ -1,7 +1,10 @@
 js-snes-player
 ==============
 
-[Demo](http://MrRio.github.com/js-snes-player/)
+This is a fork of MrRio's original
+
+
+[Demo](http://cosinusoidally.github.com/js-snes-player/)
 ----
 
 A prototype for a HTML5 audio player that can emulate the Nintendo SNES. 
