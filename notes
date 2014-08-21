@@ -7,4 +7,4 @@ Chrome: Uncaught [object Object]  sink.js:35
 
 Seems to be using a project called sink.js to play back audio. sink.js seems to be broken in both FF and Chrome.
 
-I'll concentrate on Firefox for now.
+I'll concentrate on Firefox for now. Strangely it fails in different places in FF and Chrome
