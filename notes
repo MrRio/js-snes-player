@@ -60,3 +60,6 @@ This is the audio callback. The buffer "buffer" is the output buffer for the Web
 Plan of attack: disable sink.js and turn the audio generation in to a normal function
 
 That worked. I took https://developer.mozilla.org/en-US/docs/Web/API/ScriptProcessorNode example code and increased the buffer size. I also had to tweak things slightly as the original code interlieves stereo channels. I had to generate tiwce as much audio data and then extract one channel for playback.
+
+
+Rebuilt with new Emscripten. Sprinkled a bunch of EMSCRIPTEN_KEEPALIVE over the relevant functions in spc.cpp and compiled using emcc -O1. It seems that O2 doesn't work atm. Probably my fault, I'll have a look at this some point. Anyway, O1 seems to be enough to enable asm.js which gives a nice performance boost (10x in my unscientific benchmark)
