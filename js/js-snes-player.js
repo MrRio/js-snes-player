@@ -45,7 +45,6 @@ var jsSNESPlayer = function() {
 
 			console.log('Loading SPC');
 			var load = _spc_load_spc(snes_spc, spc, spc_size);
-			error(Pointer_stringify(load));
 			console.log('SPC file loaded');
 
 			_spc_set_tempo(snes_spc, 320);
@@ -54,7 +53,7 @@ var jsSNESPlayer = function() {
 			_spc_filter_clear(filter);
 
 			console.log('Creating audio sink...');
-			 buf = allocate('', 'i8', ALLOC_STACK);
+			 buf = allocate(new Uint8Array(1e6), 'i8', ALLOC_STACK);
 			myaudioprocess= function(buffer, channelCount){
 				var retval = _spc_play(snes_spc, bufferSize/2 , buf);
 				_spc_filter_run(filter, buf, bufferSize);
@@ -111,7 +110,7 @@ audioNode.connect(context.destination);
 						alert('You need to select a song first silly!');
 					} else {
 						$.get('songs/' + song + '.json', function(response) {
-							console.log(response);
+							SongData=response;
 
 							play(response);
 						});
