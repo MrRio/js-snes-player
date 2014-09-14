@@ -96,6 +96,7 @@ audioNode.connect(context.destination);
 	return {
 		init: function() {
 			$.get('songs/index.json', function(response) {
+				response = $.parseJSON(response);
 				$.each(response, function() {
 					$('.song-selector').append('<option value="' + this + '">' + this + '</option>');
 				});
@@ -111,7 +112,7 @@ audioNode.connect(context.destination);
 					} else {
 						$.get('songs/' + song + '.json', function(response) {
 							SongData=response;
-
+							response = $.parseJSON(response);
 							play(response);
 						});
 					}
